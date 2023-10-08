@@ -4,53 +4,61 @@ async function resetDatabase() {
   try {
     // Drop existing tables if they exist
     await pool.query(`
-      DROP TABLE IF EXISTS books CASCADE;
-      DROP TABLE IF EXISTS authors CASCADE;
+      DROP TABLE IF EXISTS espada CASCADE;
+      DROP TABLE IF EXISTS resurreccion CASCADE;
     `);
 
-    // Create the authors table
+    // Create the espada table
     await pool.query(`
-      CREATE TABLE authors (
+      CREATE TABLE espada (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        first_name VARCHAR(255) NOT NULL,
-        last_name VARCHAR(255) NOT NULL
+        name VARCHAR(255) NOT NULL,
+        espada_number INT
       );
     `);
 
-    // Create the books table with a foreign key to the authors table
+    // Create the resurreccion table with a foreign key to the espada table
     await pool.query(`
-      CREATE TABLE books (
+      CREATE TABLE resurreccion (
         id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-        title VARCHAR(255) NOT NULL,
-        published_date DATE,
-        author_id INT REFERENCES authors(id)
+        resurreccion VARCHAR(255) NOT NULL,
+        resurreccion_video_path VARCHAR(255) NOT NULL,
+        espada_id INT REFERENCES espada(id)
       );
     `);
 
-    // Seed the authors table
+    // Seed the espada table
     await pool.query(`
-      INSERT INTO authors (first_name, last_name)
+      INSERT INTO espada (name, espada_number)
       VALUES 
-        ('George', 'Orwell'),
-        ('J.K.', 'Rowling'),
-        ('J.R.R.', 'Tolkien'),
-        ('Agatha', 'Christie');
+        ('Yammy Riyalgo', 0),
+        ('Coyote Stark', 1),
+        ('Baraggan Louisenbairn', 2),
+        ('Tier Harribel', 3),
+        ('Nelliel Tu Odelschwanck', 3),
+        ('Ulquiorra Cifer', 4),
+        ('Nnoitra Gilga', 5),
+        ('Grimmjow Jaegerjaquez', 6),
+        ('Zommari Rureaux', 7),
+        ('Szayelaporro Granz', 8),
+        ('Aaroniero Arruruerie', 9);
     `);
 
-    // Seed the books table
+    // Seed the resurreccion table
     await pool.query(`
-      INSERT INTO books (title, published_date, author_id)
+      INSERT INTO resurreccion (resurreccion, resurreccion_video_path, espada_id)
       VALUES 
-        ('1984', '1949-06-08', 1),
-        ('Animal Farm', '1945-08-17', 1),
-        ('Harry Potter and the Philosopher''s Stone', '1997-06-26', 2),
-        ('Harry Potter and the Chamber of Secrets', '1998-07-02', 2),
-        ('The Hobbit', '1937-09-21', 3),
-        ('The Lord of the Rings: The Fellowship of the Ring', '1954-07-29', 3),
-        ('The Lord of the Rings: The Two Towers', '1954-11-11', 3),
-        ('The Lord of the Rings: The Return of the King', '1955-10-20', 3),
-        ('And Then There Were None', '1939-11-06', 4),
-        ('Murder on the Orient Express', '1934-01-01', 4);
+        ('Get pissed off, Ira!', '', 1),
+        ('Kick about, Los Lobos!', '', 2),
+        ('Rot, Arrogante!', '', 3),
+        ('Hunt, Tiburón!', '', 4),
+        ('Praise, Gamuza!', '', 5),
+        ('Imprison, Murciélago!', '', 6),
+        ('Pray, Santa Teresa!', '', 7),
+        ('Grind, Pantera!', '', 8),
+        ('Subside, Brujería!', '', 9),
+        ('Sip, Fornicarás!', '', 10),
+        ('Devour, Glotonería!', '', 11);
     `);
 
     console.log("Database reset successful");
