@@ -48,7 +48,7 @@ async function resetDatabase() {
     await pool.query(`
       INSERT INTO resurreccion (resurreccion, resurreccion_video_path, espada_id)
       VALUES 
-        ('Get pissed off, Ira!', '', 1),
+        ('Enrage, Ira!', '', 1),
         ('Kick about, Los Lobos!', '', 2),
         ('Rot, Arrogante!', '', 3),
         ('Hunt, Tiburón!', '', 4),
