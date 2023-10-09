@@ -1,11 +1,11 @@
 // Import the 'pool' object so our helper functions can interact with the PostgreSQL database
 import { pool } from "../db/index.js";
 
-export async function getAuthors() {
-  // Query the database and return all authors
+export async function getEspada() {
+  // Query the database and return all espada
 
-  // Define the SQL query to fetch all authors from the 'authors' table
-  const queryText = "SELECT * FROM authors";
+  // Define the SQL query to fetch all authors from the 'espada' table
+  const queryText = "SELECT * FROM espada";
 
   // Use the pool object to send the query to the database
   const result = await pool.query(queryText);
@@ -14,11 +14,11 @@ export async function getAuthors() {
   return result.rows;
 }
 
-export async function getAuthorById(id) {
-  // Query the database and return the author with a matching id or null
+export async function getEspadaById(id) {
+  // Query the database and return the espada with a matching id or null
 
-  // Define the SQL query to fetch the author with the specified id from the 'authors' table
-  const queryText = "SELECT * FROM authors WHERE id = $1";
+  // Define the SQL query to fetch the espada with the specified id from the 'espada' table
+  const queryText = "SELECT * FROM espada WHERE id = $1";
 
   // Use the pool object to send the query to the database
   // passing the id as a parameter to prevent SQL injection
@@ -28,39 +28,39 @@ export async function getAuthorById(id) {
   return result.rows[0] || null;
 }
 
-export async function createAuthor(author) {
-  // Query the database to create an author and return the newly created author
+export async function createEspada(espada) {
+  // Query the database to create an espada and return the newly created espada
 
-  // Define the SQL query for inserting a new author into the 'authors' table
+  // Define the SQL query for inserting a new espada into the 'espada' table
   const queryText = `
-      INSERT INTO authors (first_name, last_name)
+      INSERT INTO espada (name, espada_number)
       VALUES ($1, $2)
       RETURNING *;
     `;
 
   // Use the pool object to send the query to the database
   const result = await pool.query(queryText, [
-    author.first_name,
-    author.last_name,
+    espada.name,
+    espada.espada_number,
   ]);
 
   // The rows property of the result object contains the inserted record
   return result.rows[0];
 }
 
-export async function updateAuthorById(id, updates) {
-  // Define the SQL query for updating the specified author in the 'authors' table
+export async function updateEspadaById(id, updates) {
+  // Define the SQL query for updating the specified espada in the 'espada' table
   const queryText = `
-      UPDATE authors
-      SET first_name = COALESCE($1, first_name), last_name = COALESCE($2, last_name)
+      UPDATE espada
+      SET name = COALESCE($1, name), espada_number = COALESCE($2, espada_name)
       WHERE id = $3
       RETURNING *;
     `;
 
   // Use the pool object to send the query to the database
   const result = await pool.query(queryText, [
-    updates.first_name,
-    updates.last_name,
+    updates.name,
+    updates.espada_number,
     id,
   ]);
 
@@ -68,12 +68,12 @@ export async function updateAuthorById(id, updates) {
   return result.rows[0] || null;
 }
 
-export async function deleteAuthorById(id) {
-  // Query the database to delete an author and return the deleted author or null
+export async function deleteEspadaById(id) {
+  // Query the database to delete an espada and return the deleted espada or null
 
-  // Define the SQL query for deleting the specified author from the 'authors' table
+  // Define the SQL query for deleting the specified espada from the 'espada' table
   const queryText = `
-      DELETE FROM authors
+      DELETE FROM espada
       WHERE id = $1
       RETURNING *;
     `;
