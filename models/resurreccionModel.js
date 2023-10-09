@@ -1,11 +1,11 @@
 // Import the 'pool' object so our helper functions can interact with the PostgreSQL database
 import { pool } from "../db/index.js";
 
-export async function getBooks() {
-  // Query the database and return all books
+export async function getResurreccions() {
+  // Query the database and return all resurreccions
 
-  // Define the SQL query to fetch all books from the 'books' table
-  const queryText = "SELECT * FROM books";
+  // Define the SQL query to fetch all resurreccions from the 'resurreccion' table
+  const queryText = "SELECT * FROM resurreccion";
 
   // Use the pool object to send the query to the database
   const result = await pool.query(queryText);
@@ -14,28 +14,28 @@ export async function getBooks() {
   return result.rows;
 }
 
-export async function getBookById(id) {
-  // Query the database and return the book with a matching id or null
+export async function getResurreccionById(id) {
+  // Query the database and return the resurreccion with a matching id or null
 
-  // Define the SQL query to fetch the book with the specified id from the 'books' table
-  const queryText = "SELECT * FROM books WHERE id = $1";
+  // Define the SQL query to fetch the resurreccion with the specified id from the 'resurreccion' table
+  const queryText = "SELECT * FROM resurreccion WHERE id = $1";
 
   // Use the pool object to send the query to the database
   // passing the id as a parameter to prevent SQL injection
   const result = await pool.query(queryText, [id]);
 
   // The rows property of the result object contains the retrieved records
-  // If a book with the specified id exists, it will be the first element in the rows array
-  // If no book exists with the specified id, the rows array will be empty
+  // If a resurreccion with the specified id exists, it will be the first element in the rows array
+  // If no resurreccion exists with the specified id, the rows array will be empty
   return result.rows[0] || null;
 }
 
-export async function createBook(book) {
-  // Query the database to create a book and return the newly created book
+export async function createResurreccion(resurreccion) {
+  // Query the database to create a resurreccion and return the newly created resurreccion
 
-  // Define the SQL query for inserting a new book into the 'books' table
+  // Define the SQL query for inserting a new resurreccion into the 'resurreccion' table
   const queryText = `
-      INSERT INTO books (title, published_date, author_id)
+      INSERT INTO resurreccion (resurreccion, resurreccion_video_path, espada_id)
       VALUES ($1, $2, $3)
       RETURNING *;
     `;
@@ -43,22 +43,22 @@ export async function createBook(book) {
   // Use the pool object to send the query to the database
   // Parameterize the query to prevent SQL injection
   const result = await pool.query(queryText, [
-    book.title,
-    book.published_date,
-    book.author_id,
+    resurreccion.resurreccion,
+    resurreccion.resurreccion_video_path,
+    resurreccion.espada_id,
   ]);
 
   // The rows property of the result object contains the inserted record
   return result.rows[0];
 }
 
-export async function updateBookById(id, updates) {
-  // Query the database to update a book and return the newly updated book or null
+export async function updateResurreccionById(id, updates) {
+  // Query the database to update a resurreccion and return the newly updated resurreccion or null
 
-  // Define the SQL query for updating the specified book in the 'books' table
+  // Define the SQL query for updating the specified resurreccion in the 'resurreccion' table
   const queryText = `
-      UPDATE books
-      SET title = COALESCE($1, title), published_date = COALESCE($2, published_date), author_id = COALESCE($3, author_id)
+      UPDATE resurreccion
+      SET resurreccion = COALESCE($1, resurreccion), resurreccion = COALESCE($2, resurreccion_video_path), espada_id = COALESCE($3, espada_id)
       WHERE id = $4
       RETURNING *;
     `;
@@ -66,23 +66,23 @@ export async function updateBookById(id, updates) {
   // Use the pool object to send the query to the database
   // Parameterize the query to prevent SQL injection
   const result = await pool.query(queryText, [
-    updates.title,
-    updates.published_date,
-    updates.author_id,
+    updates.resurreccion,
+    updates.resurreccion_video_path,
+    updates.espada_id,
     id,
   ]);
 
   // The rows property of the result object contains the updated record
-  // If no book exists with the specified id, the rows array will be empty
+  // If no resurreccion exists with the specified id, the rows array will be empty
   return result.rows[0] || null;
 }
 
-export async function deleteBookById(id) {
-  // Query the database to delete a book and return the deleted book or null
+export async function deleteResurreccionById(id) {
+  // Query the database to delete a resurreccion and return the deleted resurreccion or null
 
-  // Define the SQL query for deleting the specified book from the 'books' table
+  // Define the SQL query for deleting the specified resurreccion from the 'resurreccion' table
   const queryText = `
-      DELETE FROM books
+      DELETE FROM resurreccion
       WHERE id = $1
       RETURNING *;
     `;
@@ -92,6 +92,6 @@ export async function deleteBookById(id) {
   const result = await pool.query(queryText, [id]);
 
   // The rows property of the result object contains the deleted record
-  // If no book exists with the specified id, the rows array will be empty
+  // If no resurreccion exists with the specified id, the rows array will be empty
   return result.rows[0] || null;
 }

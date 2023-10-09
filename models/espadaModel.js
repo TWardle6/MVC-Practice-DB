@@ -4,7 +4,7 @@ import { pool } from "../db/index.js";
 export async function getEspada() {
   // Query the database and return all espada
 
-  // Define the SQL query to fetch all authors from the 'espada' table
+  // Define the SQL query to fetch all espada from the 'espada' table
   const queryText = "SELECT * FROM espada";
 
   // Use the pool object to send the query to the database
