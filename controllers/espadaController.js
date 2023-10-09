@@ -1,49 +1,49 @@
-import * as authorsModel from "../models/authorsModel.js";
+import * as espadaModel from "../models/espadaModel.js";
 
-export async function getAuthors(req, res) {
-  const authors = await authorsModel.getAuthors();
-  res.status(200).json({ status: "success", data: authors });
+export async function getEspada(req, res) {
+  const espada = await espadaModel.getEspada();
+  res.status(200).json({ status: "success", data: espada });
 }
 
-export async function getAuthorById(req, res) {
+export async function getEspadaById(req, res) {
   const id = req.params.id;
-  const author = await authorsModel.getAuthorById(id);
-  // Assume 404 status if the author is not found
-  if (!author) {
+  const espada = await espadaModel.getEspadaById(id);
+  // Assume 404 status if the espada is not found
+  if (!espada) {
     return res
       .status(404)
-      .json({ status: "fail", data: { msg: "Author not found" } });
+      .json({ status: "fail", data: { msg: "Espada not found" } });
   }
-  res.status(200).json({ status: "success", data: author });
+  res.status(200).json({ status: "success", data: espada });
 }
 
-export async function createAuthor(req, res) {
+export async function createEspada(req, res) {
   const data = req.body;
-  const author = await authorsModel.createAuthor(data);
-  res.status(201).json({ status: "success", data: author });
+  const espada = await espadaModel.createEspada(data);
+  res.status(201).json({ status: "success", data: espada });
 }
 
-export async function updateAuthorById(req, res) {
+export async function updateEspadaById(req, res) {
   const id = req.params.id;
   const data = req.body;
-  const author = await authorsModel.updateAuthorById(id, data);
-  // Assume 404 status if the author is not found
-  if (!author) {
+  const espada = await espadaModel.updateEspadaById(id, data);
+  // Assume 404 status if the espada is not found
+  if (!espada) {
     return res
       .status(404)
-      .json({ status: "fail", data: { msg: "Author not found" } });
+      .json({ status: "fail", data: { msg: "Espada not found" } });
   }
-  res.status(200).json({ status: "success", data: author });
+  res.status(200).json({ status: "success", data: espada });
 }
 
-export async function deleteAuthorById(req, res) {
+export async function deleteEspadaById(req, res) {
   const id = req.params.id;
-  const author = await authorsModel.deleteAuthorById(id);
-  // Assume 404 status if the author is not found
-  if (!author) {
+  const espada = await espadaModel.deleteEspadaById(id);
+  // Assume 404 status if the espada is not found
+  if (!espada) {
     return res
       .status(404)
-      .json({ status: "fail", data: { msg: "Author not found" } });
+      .json({ status: "fail", data: { msg: "Espada not found" } });
   }
-  res.status(200).json({ status: "success", data: author });
+  res.status(200).json({ status: "success", data: espada });
 }
